@@ -1,14 +1,16 @@
 const fetch = require('node-fetch');
-//const url = require("./JXqcs2syEPMNdAfb6Q87sZ8v4A0r/url.json");
+let currentDate  = require('./t.js');
+const apiKey = require('../JXqcs2syEPMNdAfb6Q87sZ8v4A0r/keys.js');
+
+//fetch
 const url = 'https://api.novaposhta.ua/v2.0/json/';
-//let answerObj = {};
 const keyObj = {
-	"apiKey": "bf9184305646fc07dfee4e2c2f6826e7",
+	"apiKey": apiKey,
 	"modelName": "InternetDocument",
 	"calledMethod": "getDocumentList",
 	"methodProperties": {
-		"DateTimeFrom": "01.06.2020",
-		"DateTimeTo": "15.08.2020",
+		"DateTimeFrom": "01.01.2020",
+		"DateTimeTo": currentDate.toDay,
 		"Page": "1",
 		"GetFullList": "1"
 	},
@@ -23,12 +25,16 @@ const response = fetch(url, {
 		}
 	}).then(res=>res.json()
 		).then(data=>{
-//console.log(data)
-	dataProcessor(data)
+	dataProcessor(data);
 });
 function dataProcessor(answer){
 	for (let i in answer.data) {
+//console.log(answer.data[i]);
+
 		console.log('ЕН', answer.data[i].IntDocNumber);
+//		console.log('Payer', answer.data[i].PayerType);
+//		console.log('ScheduledDate', answer.data[i].ScheduledDeliveryDate);
+//		console.log('StateName', answer.data[i].StateName);
+//		console.log('lastUpDate', answer.data[i].DateLastUpdatedStatus);
 	}
-//	console.log(data.IntDocNumber);
 }
