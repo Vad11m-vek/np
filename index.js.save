@@ -8,18 +8,7 @@ const serviceAccount = require("./JXqcs2syEPMNdAfb6Q87sZ8v4A0r/HFZl059XX15bTSw6D
 //});
 const db = admin.database();
 const ref =db.ref("auditEN/allData");
-//function allTime (){
-//	const jsonReqNP = require("./apiNP/fetch.js");
-//}
+
 ref.once("value", function(snapshot) {
- console.log( snapshot.val());
+  snapshot.val().then(date=>console.log(date))
 });
-//setInterval( ()=>{
-//const jsonReqNP = require("./apiNP/fetch.js");
-
-//} , 43200000 );
-
-setInterval( ()=>{
-let currentDate  = require('./apiNP/t.js');
-console.log(currentDate.time)
-} , 100000 );

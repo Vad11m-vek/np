@@ -1,7 +1,14 @@
 const fetch = require('node-fetch');
 let currentDate  = require('./t.js');
 const apiKey = require('../JXqcs2syEPMNdAfb6Q87sZ8v4A0r/keys.js');
-
+const admin = require("firebase-admin");
+const serviceAccount = require("../JXqcs2syEPMNdAfb6Q87sZ8v4A0r/HFZl059XX15bTSw6D68Ct4i6icXs.json");
+        admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: "https://auditnp-4dee7.firebaseio.com"
+});
+const db = admin.database();
+const ref =db.ref("auditEN/allData");
 //fetch
 const url = 'https://api.novaposhta.ua/v2.0/json/';
 const keyObj = {
@@ -9,7 +16,7 @@ const keyObj = {
 	"modelName": "InternetDocument",
 	"calledMethod": "getDocumentList",
 	"methodProperties": {
-		"DateTimeFrom": "01.01.2020",
+		"DateTimeFrom": currentDate.toDay,
 		"DateTimeTo": currentDate.toDay,
 		"Page": "1",
 		"GetFullList": "1"
@@ -28,13 +35,8 @@ const response = fetch(url, {
 	dataProcessor(data);
 });
 function dataProcessor(answer){
-	for (let i in answer.data) {
-//console.log(answer.data[i]);
-
-		console.log('ЕН', answer.data[i].IntDocNumber);
-//		console.log('Payer', answer.data[i].PayerType);
-//		console.log('ScheduledDate', answer.data[i].ScheduledDeliveryDate);
-//		console.log('StateName', answer.data[i].StateName);
-//		console.log('lastUpDate', answer.data[i].DateLastUpdatedStatus);
-	}
-}
+	var usersRef = ref.child("data"+currentDate.dayNameFile);
+		usersRef.set({
+			answer
+		});
+};
